@@ -1,0 +1,139 @@
+CREATE TABLE parent (
+
+parent_id INT NOT NULL,
+
+parent_data int,
+
+
+ 
+
+PRIMARY KEY (parent_id)
+
+) ENGINE=INNODB;
+
+
+ 
+
+CREATE TABLE child1 (
+
+child1_id INT,
+
+child1_data INT,
+
+fk_parent_id INT,
+
+
+ 
+
+INDEX par_ind1 (fk_parent_id),
+
+
+ 
+
+FOREIGN KEY (fk_parent_id)
+
+REFERENCES parent(parent_id)
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+) ENGINE=INNODB;
+
+
+ 
+
+CREATE TABLE child2 (
+
+child2_id INT,
+
+child2_data INT,
+
+fk_parent_id INT,
+
+
+ 
+
+INDEX par_ind2 (fk_parent_id),
+
+
+ 
+
+FOREIGN KEY (fk_parent_id)
+
+REFERENCES parent(parent_id)
+
+ON DELETE CASCADE
+
+ON UPDATE CASCADE
+
+) ENGINE=INNODB;
+
+
+ 
+
+INSERT INTO parent
+
+(parent_id, parent_data)
+
+VALUES
+
+(1, 11),
+
+(2, 12);
+
+
+ 
+
+INSERT INTO child1
+
+(child1_id, child1_data, fk_parent_id)
+
+VALUES
+
+(101, 1001, 1),
+
+(102, 1002, 1),
+
+(103, 1003, 1),
+
+(104, 1004, 2),
+
+(105, 1005, 2);
+
+
+ 
+
+INSERT INTO child2
+
+(child2_id, child2_data, fk_parent_id)
+
+VALUES
+
+(106, 1006, 1),
+
+(107, 1007, 1),
+
+(108, 1008, 1),
+
+(109, 1009, 2),
+
+(110, 1010, 2);
+
+Then this is allowed:
+
+
+ 
+
+UPDATE parent
+
+SET parent_id = 3 WHERE parent_id = 2;
+
+
+ 
+
+SELECT * FROM parent;
+
+SELECT * FROM child1;
+
+SELECT * FROM child2;
